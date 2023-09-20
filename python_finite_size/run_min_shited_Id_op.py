@@ -7,6 +7,7 @@ import cvxpy as cv
 
 np.random.seed(1)
 
+
 alphas = [0.15, 0.1892, 0.2]
 trials = 50
 d = 100
@@ -27,10 +28,17 @@ for alpha_ix, alpha in enumerate(alphas):
         print()
         print('***', alpha, ix, '***')
         print()
+        
+        # Generate V matrix
         V = np.random.normal(size=(d, n)) / np.sqrt(d)
         
+        # Set V matrix as parameter
         V_par.value = V
+        
+        # Solve problem
         value = prob.solve(verbose=True)
+        
+        # Extract eigenvalues of X
         X = X_var.value
         evals = np.linalg.eigvalsh(X)
         
